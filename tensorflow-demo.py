@@ -75,7 +75,7 @@ def plot_image(i, predictions_array, true_label, img):
     plt.xticks([])
     plt.yticks([])
     
-    plt.imshow(img, cm = plt.cm.binary)
+    plt.imshow(img, cmap = plt.cm.binary)
     
     predicted_label = np.argmax(predictions_array)
     if predicted_label == true_label:
@@ -101,6 +101,35 @@ def plot_value_array(i, predictions_array, true_label):
     
     thisplot[predicted_label].set_color('red')
     thisplot[true_label].set_color('blue')
+
+
+# i = 12
+# plt.figure(figsize=(6,3))
+# plt.subplot(1,2,1)
+# plot_image(i, predictions[i], test_labels, test_images)
+# plt.subplot(1,2,2)
+# plot_value_array(i, predictions[i],  test_labels)
+# plt.show()
+
+# num_rows = 5
+# num_cols = 3
+# num_images = num_rows * num_cols
+# plt.figure(figsize=(2*2*num_cols, 2*num_rows))
+# for i in range(num_images):
+#     plt.subplot(num_rows, 2*num_cols, 2*i+1)
+#     plot_image(i, predictions[i], test_labels, test_images)
+#     plt.subplot(num_rows, 2*num_cols, 2*i+2)
+#     plot_value_array(i, predictions[i], test_labels)
+# plt.tight_layout()
+# plt.show()
     
-        
-    
+
+img = test_images[1]
+img = np.expand_dims(img, 0)
+
+predictions_single = probability_model.predict(img)
+print(predictions_single)
+
+plot_value_array(1, predictions_single[0], test_labels)
+_ = plt.xticks(range(10), class_names, rotation=45)
+plt.show()
