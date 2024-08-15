@@ -35,7 +35,7 @@ packed_ds = ds.batch(10000).map(pack_row).unbatch()
 
 for features, label in packed_ds.batch(1000).take(1):
     print(features[0])
-    plt.hist(features.numpy().flatten(), bins = 101)
+    # plt.hist(features.numpy().flatten(), bins = 101)
 
 # plt.show()
 
@@ -85,7 +85,7 @@ def compile_and_fit(model, name, optimizer=None, max_epochs=10000):
   if optimizer is None:
     optimizer = get_optimizer()
   model.compile(optimizer=optimizer,
-                loss= keras.losses.BinaryFocalCrossentropy(from_logits=True),
+                loss= keras.losses.BinaryCrossentropy(from_logits=True),
                 metrics=[
                   keras.metrics.BinaryCrossentropy(
                       from_logits=True, name='binary_crossentropy'),
@@ -102,12 +102,13 @@ def compile_and_fit(model, name, optimizer=None, max_epochs=10000):
     verbose=0)
   return history
 
-tiny_model = tf.keras.Sequential([
-    layers.Dense(16, activation='elu', input_shape=(FEATURES,)),
+tiny_model = keras.Sequential([
+     layers.Dense(16, activation='elu'),
     layers.Dense(1, activation="sigmoid")
 ])
-small_model = tf.keras.Sequential([
-    layers.Dense(16, activation='elu', input_shape=(FEATURES,)),
+small_model = keras.Sequential([
+
+    layers.Dense(16, activation='elu'),
     layers.Dense(16, activation='elu'),
     layers.Dense(1, activation="sigmoid")
 ])
